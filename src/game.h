@@ -2,10 +2,14 @@
 #ifndef GAME_H
 #define GAME_H
 
+
+#define SHIPSIZE 50
+
 #include "draw.h"
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include <string>
+
 
 class Planet
 {
@@ -24,12 +28,11 @@ private:
     float move_speed;
     int population;
     int size;
-    const char *name;
-    const char *image_name;
+    std::string name;
+    std::string image_name;
 
 
 public:
-    //Planet();
     Planet( int val_id, int val_x, int val_y, float val_rotation, float val_rotation_speed, int val_move_x, int val_move_y, int val_move_width, int val_move_height, float val_move_angle, float val_move_speed, int val_population, int val_size, const char *val_name, const char *val_picture );
     ~Planet();
     int getid();
@@ -40,7 +43,6 @@ public:
     float getmove_angle();
     int getpopulation();
     int getsize();
-    void show(SDL_Surface *screen);
     std::string get_name();
     std::string get_path();
     void rotate();
@@ -50,8 +52,32 @@ public:
 };
 
 
-//int get_planets_in_universe( Database *myDatabase );
 
+
+class Spaceship
+{
+private:
+
+    int id;
+    int x;
+    int y;
+    float rotation;
+    int move_x;
+    int move_y;
+    std::string name;
+
+
+public:
+
+    Spaceship( int val_id, int val_x, int val_y, float val_rotation, int val_move_x, int val_move_y, const char *val_name );
+    ~Spaceship();
+    int getid();
+    int getx();
+    int gety();
+    float getrotation();
+    std::string get_name();
+    int is_mouse_over_ship( int val_x, int val_y );
+};
 
 
 #endif

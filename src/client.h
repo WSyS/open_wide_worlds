@@ -6,6 +6,9 @@
 #define RETVAL_MAIN_STARTGAME 1
 #define RETVAL_MAIN_OPTIONS 2
 
+#define CMD_QUIT 255
+#define CMD_ABORT 1
+#define CMD_RUN 0
 
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
@@ -16,6 +19,7 @@
 #include "image.h"
 #include "game.h"
 #include "font.h"
+#include "window.h"
 #include <string>
 #include <vector>
 

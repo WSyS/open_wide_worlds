@@ -1,2 +1,3 @@
 planeten oval bewegen lassen, derzeit wird nur der kleinere wert verwendet
-flackern beseitigen
+raumschiffe einfügen
+population auf raumschiffen und planeten

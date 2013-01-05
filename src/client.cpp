@@ -76,16 +76,17 @@ int main( int argc, char* args[] )
 
 
 
-    while( quit == false )
+    while( quit == CMD_RUN )
     {
         uint8_t retval;
         retval = Mainmenu(screen, event, fps);
         if (retval == RETVAL_MAIN_EXIT)
-            quit=true;
+            quit=CMD_QUIT;
         if (retval == RETVAL_MAIN_OPTIONS)
             Optionmenu(screen, event, fps);
         if (retval == RETVAL_MAIN_STARTGAME)
-            Gameloop(screen, event, fps, &myDatabase);
+            if (Gameloop(screen, event, fps, &myDatabase) == CMD_QUIT)
+                quit=CMD_QUIT;
     }
 
 
@@ -181,6 +182,7 @@ uint8_t Optionmenu(SDL_Surface *screen, SDL_Event event, Timer fps){
 
 }
 
+
 uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDatabase){
 
     std::vector<Planet> Planets;
@@ -192,28 +194,38 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
     Timer database_timer;
     database_timer.start();
 
-    bool quit = false;
+    uint8_t quit = false;
 
-    bool submenu =false;
+    //bool submenu = false;
 
     int num_planets = 0;
 
     Image Background( "images/bg_stars/1.png" , 0, 0, false);
 
-    Font Planetinfo ( 0, 0, "test" );
+    //Font Planetinfo ( 0, 0, "" );
 
-    while( quit == false ){
+    /*std::vector<Window> Windows;
+    printf("start push\n");
+    Windows.push_back({0, 0, 100, 100});
+        printf("end push\n");
+    Windows[Windows.size()-1].set_background(0,255,0);
+    Windows[Windows.size()-1].is_mouse_over_window(1,1);
+*/
+    Window Planetinfo(0,0,100,100);
+    Planetinfo.set_background(0,255,0);
+    
+    while( quit == CMD_RUN ){
 
 
         uint8_t *keystates = SDL_GetKeyState( NULL );
         if( keystates[ SDLK_ESCAPE ] ) {
-            quit = true;
+            quit = CMD_ABORT;
         }
         while( SDL_PollEvent( &event ) )
         {
 
             if( event.type == SDL_QUIT )
-                quit = true;
+                quit = CMD_QUIT;
 
 
             if( event.type == SDL_MOUSEBUTTONDOWN )
@@ -221,16 +233,16 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
                 if( event.button.button == SDL_BUTTON_LEFT ){
                     for (int i=0; i<num_planets;i++){
                         if (Planets[i].is_mouse_over_planet ( event.button.x, event.button.y )){
-                            submenu = true;
-                            std::string tmp_text = Planets[i].get_name();
-                            Planetinfo.changetext ( tmp_text.c_str() );
+                            //submenu = true;
+                            //std::string tmp_text = Planets[i].get_name();
+                            //Planetinfo.changetext ( tmp_text.c_str() );
 
                         }
                     }
                 }
             }
             if( event.type == SDL_MOUSEBUTTONUP ){
-                submenu = false;
+                //submenu = false;
             }
 
         }
@@ -245,19 +257,25 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
             fps.start();
             Background.show(screen);
             for (int i=0; i<num_planets;i++){
-
                 for (uint j=0; j<Images.size();j++){
                     if ( Images[j].get_path() == Planets[i].get_path() ){
-                        //Images[j].show(screen, Planets[i].getx(), Planets[i].gety());
                         Images[j].show(screen, Planets[i].getx(), Planets[i].gety(), Planets[i].getsize(), Planets[i].getsize(),Planets[i].getrotation());
+
                     }
                 }
-                //Planets[i].show(screen);
-                //printf("     planet x: %d\n", Planets[i].getx() );
+
             }
-            if (submenu == true){
-                Planetinfo.show(screen);
-            }
+
+            /*            if (submenu == true){
+             *               Planetinfo.show(screen);
+        }
+        */
+
+            /*for (uint i=0; i<Windows.size();i++){
+                Windows[i].show(screen);
+            }*/
+            Planetinfo.show(screen);
+
             flip_screen(screen);
         }
 
@@ -268,8 +286,10 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
             num_planets = myDatabase->read_planets_in_universe(myDatabase, &Planets, "1");
         }
 
-        SDL_Delay(3);
+
+
+        SDL_Delay(10);
     }
-    return 0;
+    return quit;
 
 }

@@ -39,6 +39,7 @@ int Image::show(SDL_Surface *screen ,int x, int y, int width, int height)
 
 int Image::show(SDL_Surface *screen ,int x, int y, int width, int height, double rotation)
 {
+    
     int retval;
     double zoomx = (double) width / (double) imageSheet->w;
     double zoomy = (double) height / (double) imageSheet->h;
