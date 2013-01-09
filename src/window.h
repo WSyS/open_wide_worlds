@@ -24,7 +24,7 @@ public:
     void set_background(int r, int g, int b, int a);
     void show(SDL_Surface *screen);
     std::string getid();
-    void add_font(int val_x, int val_y, const char *Text, int val_size, uint8_t val_r,  uint8_t val_g,  uint8_t val_b);
+    void add_font(std::string id, int val_x, int val_y, const char *Text, int val_size, uint8_t val_r,  uint8_t val_g,  uint8_t val_b);
     void remove_all_fonts();
 };
 

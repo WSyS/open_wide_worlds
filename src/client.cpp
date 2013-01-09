@@ -99,11 +99,11 @@ uint8_t Mainmenu(SDL_Surface *screen, SDL_Event event, Timer fps){
 
     bool quit = false;
 
-    Button Button_Play( ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) - 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
-    Button Button_Options( ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ), BUTTON_ALIGN_TOPLEFT, "images/buttons/options.png");
-    Button Button_Exit( ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) + 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/end.png");
+    Button Button_Play( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) - 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
+    Button Button_Options( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ), BUTTON_ALIGN_TOPLEFT, "images/buttons/options.png");
+    Button Button_Exit( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) + 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/end.png");
 
-    Image Background( "images/bg_main.png" , 0, 0, false);
+    Image Background( "", "images/bg_main.png" , 0, 0, false);
 
 
     while( quit == false ){
@@ -149,9 +149,9 @@ uint8_t Optionmenu(SDL_Surface *screen, SDL_Event event, Timer fps){
     bool quit = false;
 
 
-    Button Button_Exit( SCREEN_WIDTH -300, SCREEN_HEIGHT - 100, BUTTON_ALIGN_TOPLEFT, "images/buttons/abort.png");
+    Button Button_Exit( "", SCREEN_WIDTH -300, SCREEN_HEIGHT - 100, BUTTON_ALIGN_TOPLEFT, "images/buttons/abort.png");
 
-    Image Background( "images/bg_main.png" , 0, 0, false);
+    Image Background( "", "images/bg_main.png" , 0, 0, false);
 
 
     while( quit == false ){
@@ -200,7 +200,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
     int num_planets = 0;
 
-    Image Background( "images/bg_stars/1.png" , 0, 0, false);
+    Image Background( "", "images/bg_stars/1.png" , 0, 0, false);
 
     //Font Planetinfo ( 0, 0, "" );
 
@@ -208,8 +208,9 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
     window_make(&Windows,"Planet",100,100,300,100);
     window_set_background(&Windows,"Planet",255,255,255,128);
-    Windows[0]->add_font(0,0,"test",50,0,255,0);
+    Windows[0]->add_font("testid",0,0,"test",50,0,255,0);
 
+    
     
     while( quit == CMD_RUN ){
 
@@ -233,6 +234,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
                             //submenu = true;
                             //std::string tmp_text = Planets[i].get_name();
                             //Planetinfo.changetext ( tmp_text.c_str() );
+                            window_set_background(&Windows,"Planet",255,255,255,0);
 
                         }
                     }
@@ -240,6 +242,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
             }
             if( event.type == SDL_MOUSEBUTTONUP ){
                 //submenu = false;
+                window_set_background(&Windows,"Planet",255,255,255,128);
             }
 
         }
@@ -257,7 +260,6 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
                 for (uint j=0; j<Images.size();j++){
                     if ( Images[j].get_path() == Planets[i].get_path() ){
                         Images[j].show(screen, Planets[i].getx(), Planets[i].gety(), Planets[i].getsize(), Planets[i].getsize(),Planets[i].getrotation());
-
                     }
                 }
 

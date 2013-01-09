@@ -93,9 +93,9 @@ std::string Window::getid(){
 }
 
 
-void Window::add_font(int val_x, int val_y, const char *Text, int val_size, uint8_t val_r,  uint8_t val_g,  uint8_t val_b){
+void Window::add_font(std::string id, int val_x, int val_y, const char *Text, int val_size, uint8_t val_r,  uint8_t val_g,  uint8_t val_b){
     //printf("showing x: %d\n", val_x);
-    Font * f = new Font(val_x, val_y, Text, val_size, val_r, val_g, val_b);
+    Font * f = new Font(id, val_x, val_y, Text, val_size, val_r, val_g, val_b);
     Fonts.push_back(f);
 }
 

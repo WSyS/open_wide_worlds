@@ -3,10 +3,11 @@
 
 
 
-Button::Button( int x, int y, int align, const char *path )
+Button::Button( std::string val_id, int x, int y, int align, const char *path )
 {
 
-
+    id = val_id;
+    
     buttonSheet = IMG_Load( path );
     if( buttonSheet == NULL )
     {
@@ -70,10 +71,12 @@ uint8_t Button::handle_events(SDL_Event event)
         if( ( x > box.x ) && ( x < box.x + box.w ) && ( y > box.y ) && ( y < box.y + box.h ) )
         {
             clip = &clips[ CLIP_MOUSEOVER ];
+            return BUTTON_MOUSEOVER;
         }
         else
         {
             clip = &clips[ CLIP_MOUSEOUT ];
+            return BUTTON_MOUSEOUT;
         }
     }
 
@@ -154,4 +157,9 @@ bool Button::is_image_loaded(){
         return false;
     }
     return true;
+}
+
+
+std::string Button::getid(){
+    return id;
 }

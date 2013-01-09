@@ -6,10 +6,14 @@
 
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
+#include <string>
+
 
 #define NO_EVENT 0
 #define BUTTON_PUSHED 1
 #define BUTTON_RELEASED 2
+#define BUTTON_MOUSEOVER 3
+#define BUTTON_MOUSEOUT 4
 
 #define BUTTON_ALIGN_TOPLEFT 0
 #define BUTTON_ALIGN_CENTERCENTER 1
@@ -30,10 +34,12 @@ private:
     SDL_Rect clips[ 4 ];
     
     SDL_Rect* clip;
+
+    std::string id;
+    
     
 public:
-
-    Button( int x, int y, int align, const char *path );
+    Button( std::string val_id, int x, int y, int align, const char *path );
     ~Button();
     uint8_t handle_events(SDL_Event event);
     int show(SDL_Surface *screen);
@@ -44,6 +50,7 @@ public:
     void set_xy( int x, int y );
     void set_wh( int width, int height );
     bool is_image_loaded();
+    std::string getid();
 };
 
 

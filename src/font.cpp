@@ -2,8 +2,10 @@
 
 
 
-Font::Font( int var_x, int var_y, const char *Text, int val_size, uint8_t val_r,  uint8_t val_g,  uint8_t val_b )
+Font::Font( std::string val_id, int var_x, int var_y, const char *Text, int val_size, uint8_t val_r,  uint8_t val_g,  uint8_t val_b )
 {
+    id = val_id;
+    
     if( TTF_Init() == -1 )
     {
     }
@@ -47,3 +49,6 @@ int Font::show(SDL_Surface *screen)
     return SDL_BlitSurface( message, NULL, screen, &offset );
 }
 
+std::string Font::getid(){
+    return id;
+}

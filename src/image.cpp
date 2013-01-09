@@ -6,8 +6,9 @@ Image::Image(){
 }
 
 
-Image::Image(std::string image_path , int x, int y, bool usealpha)
+Image::Image(std::string val_id, std::string image_path , int x, int y, bool usealpha)
 {
+    id = val_id;
     load_image(image_path,x,y,usealpha);
 }
 
@@ -84,4 +85,9 @@ std::string Image::get_path(){
 
     return path;
 
+}
+
+
+std::string Image::getid(){
+    return id;
 }

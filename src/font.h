@@ -16,13 +16,16 @@ private:
     SDL_Surface *message = NULL;
     int x;
     int y;
+    std::string id;
+
 
 public:
 
-    Font( int var_x, int var_y, const char *Text, int val_size, uint8_t val_r,  uint8_t val_g,  uint8_t val_b );
+    Font( std::string val_id, int var_x, int var_y, const char *Text, int val_size, uint8_t val_r,  uint8_t val_g,  uint8_t val_b );
     ~Font();
     void changetext ( const char *Text );
     int show(SDL_Surface *screen);
+    std::string getid();
 };
 
 #endif
