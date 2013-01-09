@@ -204,15 +204,12 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
     //Font Planetinfo ( 0, 0, "" );
 
-    /*std::vector<Window> Windows;
-    printf("start push\n");
-    Windows.push_back({0, 0, 100, 100});
-        printf("end push\n");
-    Windows[Windows.size()-1].set_background(0,255,0);
-    Windows[Windows.size()-1].is_mouse_over_window(1,1);
-*/
-    Window Planetinfo(0,0,100,100);
-    Planetinfo.set_background(0,255,0);
+    std::vector<Window*> Windows;
+
+    window_make(&Windows,"Planet",100,100,300,100);
+    window_set_background(&Windows,"Planet",255,255,255,128);
+    Windows[0]->add_font(0,0,"test",50,0,255,0);
+
     
     while( quit == CMD_RUN ){
 
@@ -271,10 +268,11 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
         }
         */
 
-            /*for (uint i=0; i<Windows.size();i++){
-                Windows[i].show(screen);
-            }*/
-            Planetinfo.show(screen);
+            for (uint i=0; i<Windows.size();i++){
+                //printf("showing: %d\n", i);
+                Windows[i]->show(screen);
+            }
+
 
             flip_screen(screen);
         }
