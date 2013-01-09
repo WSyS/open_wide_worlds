@@ -102,7 +102,7 @@ uint8_t Mainmenu(SDL_Surface *screen, SDL_Event event, Timer fps){
     Button Button_Play( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) - 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
     Button Button_Options( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ), BUTTON_ALIGN_TOPLEFT, "images/buttons/options.png");
     Button Button_Exit( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) + 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/end.png");
-
+Button_Play.set_MouseDownEvent(new Foo(12,13));
     Image Background( "", "images/bg_main.png" , 0, 0, false);
 
 

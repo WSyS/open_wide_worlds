@@ -6,6 +6,9 @@
 
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
+
+#include "event.h"
+
 #include <string>
 
 
@@ -28,6 +31,9 @@ const int CLIP_MOUSEUP = 3;
 class Button
 {
 private:
+
+    Event* MouseDownEvent;
+    
     SDL_Rect box;
     
     SDL_Surface *buttonSheet = NULL;
@@ -51,6 +57,7 @@ public:
     void set_wh( int width, int height );
     bool is_image_loaded();
     std::string getid();
+    void set_MouseDownEvent(Event *event);
 };
 
 

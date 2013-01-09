@@ -7,7 +7,7 @@ Button::Button( std::string val_id, int x, int y, int align, const char *path )
 {
 
     id = val_id;
-    
+
     buttonSheet = IMG_Load( path );
     if( buttonSheet == NULL )
     {
@@ -90,6 +90,8 @@ uint8_t Button::handle_events(SDL_Event event)
             if( ( x > box.x ) && ( x < box.x + box.w ) && ( y > box.y ) && ( y < box.y + box.h ) )
             {
                 clip = &clips[ CLIP_MOUSEDOWN ];
+                if ( MouseDownEvent != NULL)
+                    MouseDownEvent->DoEvent();
                 return BUTTON_PUSHED;
             }
         }
@@ -114,7 +116,7 @@ uint8_t Button::handle_events(SDL_Event event)
 
 int Button::show(SDL_Surface *screen)
 {
-        return SDL_BlitSurface( buttonSheet, clip, screen, &box );
+    return SDL_BlitSurface( buttonSheet, clip, screen, &box );
 }
 
 
@@ -162,4 +164,9 @@ bool Button::is_image_loaded(){
 
 std::string Button::getid(){
     return id;
+}
+
+
+void Button::set_MouseDownEvent(Event *event){
+    MouseDownEvent=event;
 }
