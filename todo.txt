@@ -1,3 +1,8 @@
 planeten oval bewegen lassen, derzeit wird nur der kleinere wert verwendet
 raumschiffe einfügen
 population auf raumschiffen und planeten
+fenster für planeten und raumschiffe einfügen
+steuerung der raumschiffe die einen gehören
+raumschiffe auf planeten landen
+raumschiffe ausstatten
+raumschiffe angreifen
