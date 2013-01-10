@@ -27,6 +27,8 @@ const int CLIP_MOUSEOUT = 1;
 const int CLIP_MOUSEDOWN = 2;
 const int CLIP_MOUSEUP = 3;
 
+class Window;
+class Event;
 
 class Button
 {

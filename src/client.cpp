@@ -40,20 +40,7 @@ int main( int argc, char* args[] )
     //The surfaces
     SDL_Surface *screen = NULL;
 
-    /*    Uint32 rmask, gmask, bmask, amask;
-     *   #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-     *   rmask = 0xff000000;
-     *   gmask = 0x00ff0000;
-     *   bmask = 0x0000ff00;
-     *   amask = 0x000000ff;
-     *   #else
-     *   rmask = 0x000000ff;
-     *   gmask = 0x0000ff00;
-     *   bmask = 0x00ff0000;
-     *   amask = 0xff000000;
-     *   #endif
-     *   SDL_Surface *screen = SDL_CreateRGBSurface(SDL_SWSURFACE, SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, rmask, gmask, bmask, amask);
-     */
+
 
     //The event structure
     SDL_Event event;
@@ -75,7 +62,7 @@ int main( int argc, char* args[] )
     Database myDatabase("localhost", "open_wide_worlds", "game", "game");
 
 
-
+    
     while( quit == CMD_RUN )
     {
         uint8_t retval;
@@ -97,12 +84,13 @@ int main( int argc, char* args[] )
 
 uint8_t Mainmenu(SDL_Surface *screen, SDL_Event event, Timer fps){
 
+
     bool quit = false;
 
     Button Button_Play( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) - 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
     Button Button_Options( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ), BUTTON_ALIGN_TOPLEFT, "images/buttons/options.png");
     Button Button_Exit( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) + 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/end.png");
-Button_Play.set_MouseDownEvent(new Foo(12,13));
+
     Image Background( "", "images/bg_main.png" , 0, 0, false);
 
 
@@ -206,12 +194,18 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
     std::vector<Window*> Windows;
 
-    window_make(&Windows,"Planet",100,100,300,100);
-    window_set_background(&Windows,"Planet",255,255,255,128);
-    Windows[0]->add_font("testid",0,0,"test",50,0,255,0);
+    window_make(&Windows,"Planet",0,0,220,180);
+    window_set_background(&Windows,"Planet",255,255,255,127);
+    window_add_font(&Windows,"Planet","testid",10,0,"test",50,0,255,0);
+
 
     
-    
+window_add_button(&Windows,"Planet", "testbtn1", 10, 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
+window_add_button(&Windows,"Planet", "testbtn2", 10, 120, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
+window_add_button_event(&Windows,"Planet", "testbtn1", (new EventSetWindowBackground(&Windows,"Planet",255,128,255,0)));
+
+//Button_Play.set_MouseDownEvent(new Foo(12,13));
+
     while( quit == CMD_RUN ){
 
 
@@ -244,6 +238,8 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
                 //submenu = false;
                 window_set_background(&Windows,"Planet",255,255,255,128);
             }
+
+            window_handle_events(&Windows, event);
 
         }
 
@@ -290,6 +286,10 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
         SDL_Delay(10);
     }
+    
+    window_delete_all(&Windows);
     return quit;
 
+
+    
 }

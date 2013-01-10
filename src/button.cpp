@@ -6,6 +6,8 @@
 Button::Button( std::string val_id, int x, int y, int align, const char *path )
 {
 
+    MouseDownEvent = new NoEvent();
+    
     id = val_id;
 
     buttonSheet = IMG_Load( path );
@@ -57,10 +59,12 @@ Button::Button( std::string val_id, int x, int y, int align, const char *path )
 Button::~Button()
 {
     SDL_FreeSurface( buttonSheet );
+    delete MouseDownEvent;
 }
 
 uint8_t Button::handle_events(SDL_Event event)
 {
+
     int x = 0, y = 0;
 
     if( event.type == SDL_MOUSEMOTION )
@@ -168,5 +172,6 @@ std::string Button::getid(){
 
 
 void Button::set_MouseDownEvent(Event *event){
+    delete MouseDownEvent;
     MouseDownEvent=event;
 }

@@ -31,6 +31,7 @@ Window::~Window()
 {
     SDL_FreeSurface( background );
     remove_all_fonts();
+    remove_all_buttons();
     //printf("deconst\n");
 
 }
@@ -78,13 +79,21 @@ return SDL_BlitSurface( background, NULL, screen, &box );
     #endif
 
     SDL_Surface *windowscreen = SDL_CreateRGBSurface(SDL_SWSURFACE, box.w, box.h, 32, rmask, gmask, bmask, amask);
+
+    SDL_BlitSurface( screen, &box, windowscreen, NULL );
+    SDL_BlitSurface( background, NULL, windowscreen, NULL );
+
     for (uint i=0; i<Fonts.size();i++){
         Fonts[i]->show(windowscreen);
     }
-    SDL_BlitSurface( background, NULL, screen, &box );
+    for (uint i=0; i<Buttons.size();i++){
+        Buttons[i]->show(windowscreen);
+    }
+
+
     SDL_BlitSurface( windowscreen, NULL, screen, &box );
     SDL_FreeSurface( windowscreen );
-    
+
 }
 
 
@@ -94,7 +103,6 @@ std::string Window::getid(){
 
 
 void Window::add_font(std::string id, int val_x, int val_y, const char *Text, int val_size, uint8_t val_r,  uint8_t val_g,  uint8_t val_b){
-    //printf("showing x: %d\n", val_x);
     Font * f = new Font(id, val_x, val_y, Text, val_size, val_r, val_g, val_b);
     Fonts.push_back(f);
 }
@@ -105,6 +113,64 @@ void Window::remove_all_fonts(){
         delete Fonts[i];
     }
     Fonts.clear();
+}
+
+void window_add_font(std::vector<Window*> *Windows, std::string window_id, std::string font_id, int val_x, int val_y, const char *Text, int val_size, uint8_t val_r,  uint8_t val_g,  uint8_t val_b){
+    for (uint i=0; i<Windows->size();i++){
+        if (window_id==(*Windows)[i]->getid()){
+            (*Windows)[i]->add_font(font_id,val_x,val_y,Text,val_size,val_r,val_g,val_b);
+            break;
+        }
+    }
+}
+
+
+void window_add_button(std::vector<Window*> *Windows, std::string window_id, std::string button_id, int x, int y, int align, const char *path){
+    for (uint i=0; i<Windows->size();i++){
+        if (window_id==(*Windows)[i]->getid()){
+            (*Windows)[i]->add_button( button_id, x, y, align, path);
+            break;
+        }
+    }
+}
+
+
+void Window::add_button(std::string val_id, int x, int y, int align, const char *path){
+    Button * b = new Button( val_id, x, y, align, path );
+    Buttons.push_back(b);
+}
+
+
+void Window::remove_all_buttons(){
+    for (uint i=0; i<Buttons.size();i++){
+        delete Buttons[i];
+    }
+    Buttons.clear();
+}
+
+
+void Window::button_set_MouseDownEvent(std::string button_id, Event *event){
+    for (uint i=0; i<Buttons.size();i++){
+        if (button_id==Buttons[i]->getid()){
+            Buttons[i]->set_MouseDownEvent(event);
+        }
+    }
+}
+
+
+void window_add_button_event(std::vector<Window*> *Windows, std::string window_id, std::string button_id, Event *event ){
+    for (uint i=0; i<Windows->size();i++){
+        if (window_id==(*Windows)[i]->getid()){
+                (*Windows)[i]->button_set_MouseDownEvent(button_id,event);
+        }
+    }
+}
+
+
+void Window::handle_events(SDL_Event event){
+    for (uint i=0; i<Buttons.size();i++){
+        Buttons[i]->handle_events(event);
+    }
 }
 
 
@@ -125,11 +191,27 @@ void window_delete(std::vector<Window*> *Windows, std::string id){
 }
 
 
+void window_delete_all(std::vector<Window*> *Windows){
+    for (uint i=0; i<Windows->size();i++){
+        delete (*Windows)[i];
+    }
+    Windows->clear();
+}
+
+
 void window_set_background(std::vector<Window*> *Windows, std::string id, int r, int g, int b, int a){
     for (uint i=0; i<Windows->size();i++){
         if (id==(*Windows)[i]->getid()){
             (*Windows)[i]->set_background(r, g, b, a);
             break;
         }
+    }
+}
+
+
+
+void window_handle_events(std::vector<Window*> *Windows, SDL_Event event){
+    for (uint i=0; i<Windows->size();i++){
+        (*Windows)[i]->handle_events(event);
     }
 }

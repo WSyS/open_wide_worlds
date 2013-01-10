@@ -1,5 +1,27 @@
 #include "event.h"
 
+
+EventSetWindowBackground::EventSetWindowBackground(std::vector<Window*> *val_Windows, std::string val_id, int val_r, int val_g, int val_b, int val_a){
+    Windows=val_Windows;
+    id=val_id;
+    r=val_r;
+    g=val_g;
+    b=val_b;
+    a=val_a;
+}
+
+
+void EventSetWindowBackground::DoEvent() {
+    for (uint i=0; i<Windows->size();i++){
+        if (id==(*Windows)[i]->getid()){
+            (*Windows)[i]->set_background(r, g, b, a);
+            break;
+        }
+    }
+}
+
+/*
+
 Foo::Foo(int val_x, int val_y) {
     x=val_x;
     y=val_y;
@@ -20,7 +42,7 @@ void Bar::DoEvent() {
     if ( x==19 ){ std::cout << "Bar clicked\n"; }
 }
 
-
+*/
 
 
 /*
