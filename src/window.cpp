@@ -169,7 +169,7 @@ void window_add_button_event(std::vector<Window*> *Windows, std::string window_i
 
 void Window::handle_events(SDL_Event event){
     for (uint i=0; i<Buttons.size();i++){
-        Buttons[i]->handle_events(event);
+        Buttons[i]->handle_events(event,100,100);
     }
 }
 

@@ -194,7 +194,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
     std::vector<Window*> Windows;
 
-    window_make(&Windows,"Planet",0,0,220,180);
+    window_make(&Windows,"Planet",100,100,220,180);
     window_set_background(&Windows,"Planet",255,255,255,127);
     window_add_font(&Windows,"Planet","testid",10,0,"test",50,0,255,0);
 

@@ -49,7 +49,7 @@ private:
 public:
     Button( std::string val_id, int x, int y, int align, const char *path );
     ~Button();
-    uint8_t handle_events(SDL_Event event);
+    uint8_t handle_events(SDL_Event event, int offset_x = 0, int offset_y = 0 );
     int show(SDL_Surface *screen);
     int get_x();
     int get_y();

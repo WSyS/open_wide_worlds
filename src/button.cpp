@@ -62,15 +62,15 @@ Button::~Button()
     delete MouseDownEvent;
 }
 
-uint8_t Button::handle_events(SDL_Event event)
+uint8_t Button::handle_events(SDL_Event event, int offset_x, int offset_y )
 {
 
-    int x = 0, y = 0;
+    int x = offset_x, y = offset_y;
 
     if( event.type == SDL_MOUSEMOTION )
     {
-        x = event.motion.x;
-        y = event.motion.y;
+        x = event.motion.x - x;
+        y = event.motion.y - y;
 
         if( ( x > box.x ) && ( x < box.x + box.w ) && ( y > box.y ) && ( y < box.y + box.h ) )
         {
@@ -88,8 +88,8 @@ uint8_t Button::handle_events(SDL_Event event)
     {
         if( event.button.button == SDL_BUTTON_LEFT )
         {
-            x = event.button.x;
-            y = event.button.y;
+            x = event.button.x - x;
+            y = event.button.y - y;
 
             if( ( x > box.x ) && ( x < box.x + box.w ) && ( y > box.y ) && ( y < box.y + box.h ) )
             {
@@ -105,8 +105,8 @@ uint8_t Button::handle_events(SDL_Event event)
     {
         if( event.button.button == SDL_BUTTON_LEFT )
         {
-            x = event.button.x;
-            y = event.button.y;
+            x = event.button.x - x;
+            y = event.button.y - y;
 
             if( ( x > box.x ) && ( x < box.x + box.w ) && ( y > box.y ) && ( y < box.y + box.h ) )
             {
