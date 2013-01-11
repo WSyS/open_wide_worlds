@@ -106,9 +106,9 @@ int Database::read_planets_in_universe(Database *myDatabase, std::vector<Planet>
 
 
     if(connect){
-        std::string fetch = "SELECT `id` ,`x` , `y` ,`rotation`, `rotation_speed`, `move_x`, `move_y`, `move_width`, `move_height`, `move_angle`, `move_speed`, `population`, `size` , `name` , `picture` FROM `planets` WHERE " + universe;
-
-
+        std::string fetch = "SELECT `id` ,`x` , `y` ,`rotation`, `rotation_speed`, `move_x`, `move_y`, `move_width`, `move_height`, `move_angle`, `move_speed`, `population`, `size` , `name` , `picture` FROM `planets`";
+        if (universe!="*")
+            fetch += " WHERE  `universe` = " + universe;
         MYSQL_RES *result;
         MYSQL_ROW row;
 

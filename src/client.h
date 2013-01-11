@@ -14,6 +14,7 @@
 #include "SDL/SDL_image.h"
 #include "timer.h"
 #include "mysql.h"
+#include "inputbox.h"
 #include "draw.h"
 #include "button.h"
 #include "image.h"

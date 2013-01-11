@@ -18,7 +18,7 @@ int main( int argc, char* args[] )
         if (database_timer.get_ticks() >= REFRESH_DATABASE_EVERY_MSECOND){
             database_timer.start();
             Planets.clear();
-            num_planets = (&myDatabase)->read_planets_in_universe(&myDatabase, &Planets, "1");
+            num_planets = (&myDatabase)->read_planets_in_universe(&myDatabase, &Planets, "*");
 
             for (int i=0; i<num_planets;i++){
                 Planets[i].rotate();

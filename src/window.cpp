@@ -48,13 +48,9 @@ int Window::is_mouse_over_window( int val_x, int val_y ){
 void Window::set_background(int r, int g, int b, int a){
     //printf("back\n");
 
-    SDL_Rect rect;
-    rect.x = 0;
-    rect.y = 0;
-    rect.w = box.w;
-    rect.h = box.h;
+    SDL_Rect fillbox = {0,0,box.w,box.h};
     Uint32 colour = SDL_MapRGBA(background->format, r, g, b, a);
-    SDL_FillRect(background, &rect, colour);
+    SDL_FillRect(background, &fillbox, colour);
 }
 
 void Window::show(SDL_Surface *screen)
@@ -78,7 +74,7 @@ return SDL_BlitSurface( background, NULL, screen, &box );
     amask = 0xff000000;
     #endif
 
-    SDL_Surface *windowscreen = SDL_CreateRGBSurface(SDL_SWSURFACE, box.w, box.h, 32, rmask, gmask, bmask, amask);
+    SDL_Surface *windowscreen = SDL_CreateRGBSurface(SDL_SWSURFACE, box.w, box.h, screen->format->BitsPerPixel, rmask, gmask, bmask, amask);
 
     SDL_BlitSurface( screen, &box, windowscreen, NULL );
     SDL_BlitSurface( background, NULL, windowscreen, NULL );

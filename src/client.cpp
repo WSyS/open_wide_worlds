@@ -37,6 +37,7 @@ void clean_up()
 int main( int argc, char* args[] )
 {
 
+    
     //The surfaces
     SDL_Surface *screen = NULL;
 
@@ -87,6 +88,14 @@ uint8_t Mainmenu(SDL_Surface *screen, SDL_Event event, Timer fps){
 
     bool quit = false;
 
+
+Inputbox inputb1( "", 100, 100, 500, 30, "Test", 0, 255, 0);
+Inputbox inputb2( "", 100, 200, 500, 30, "Test", 0, 255, 0);
+Inputbox inputb3( "", 100, 300, 500, 30, "Test", 0, 255, 0);
+
+//inputb.changetext("asdf");
+
+    
     Button Button_Play( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) - 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
     Button Button_Options( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ), BUTTON_ALIGN_TOPLEFT, "images/buttons/options.png");
     Button Button_Exit( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) + 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/end.png");
@@ -101,6 +110,11 @@ uint8_t Mainmenu(SDL_Surface *screen, SDL_Event event, Timer fps){
             //}
             if( SDL_PollEvent( &event ) )
             {
+
+inputb1.handle_events(event);
+inputb2.handle_events(event);
+inputb3.handle_events(event);
+                
                 if (Button_Play.handle_events(event) == BUTTON_PUSHED)
                     return RETVAL_MAIN_STARTGAME;
 
@@ -121,6 +135,10 @@ uint8_t Mainmenu(SDL_Surface *screen, SDL_Event event, Timer fps){
                 Button_Play.show(screen);
                 Button_Options.show(screen);
                 Button_Exit.show(screen);
+inputb1.show(screen);
+inputb2.show(screen);
+inputb3.show(screen);
+
                 flip_screen(screen);
             }
     }
@@ -202,7 +220,8 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
     
 window_add_button(&Windows,"Planet", "testbtn1", 10, 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
 window_add_button(&Windows,"Planet", "testbtn2", 10, 120, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
-window_add_button_event(&Windows,"Planet", "testbtn1", (new EventSetWindowBackground(&Windows,"Planet",255,128,255,0)));
+window_add_button_event(&Windows,"Planet", "testbtn1", (new EventSetWindowBackground(&Windows,"Planet",255,255,0,50)));
+window_add_button_event(&Windows,"Planet", "testbtn2", (new EventSetWindowBackground(&Windows,"Planet",255,255,0,0)));
 
 //Button_Play.set_MouseDownEvent(new Foo(12,13));
 
@@ -228,7 +247,7 @@ window_add_button_event(&Windows,"Planet", "testbtn1", (new EventSetWindowBackgr
                             //submenu = true;
                             //std::string tmp_text = Planets[i].get_name();
                             //Planetinfo.changetext ( tmp_text.c_str() );
-                            window_set_background(&Windows,"Planet",255,255,255,0);
+                            
 
                         }
                     }
@@ -236,7 +255,6 @@ window_add_button_event(&Windows,"Planet", "testbtn1", (new EventSetWindowBackgr
             }
             if( event.type == SDL_MOUSEBUTTONUP ){
                 //submenu = false;
-                window_set_background(&Windows,"Planet",255,255,255,128);
             }
 
             window_handle_events(&Windows, event);
@@ -279,7 +297,7 @@ window_add_button_event(&Windows,"Planet", "testbtn1", (new EventSetWindowBackgr
         if (database_timer.get_ticks() >= REFRESH_DATABASE_EVERY_MSECOND){
             database_timer.start();
             Planets.clear();
-            num_planets = myDatabase->read_planets_in_universe(myDatabase, &Planets, "1");
+            num_planets = myDatabase->read_planets_in_universe(myDatabase, &Planets, "0");
         }
 
 
