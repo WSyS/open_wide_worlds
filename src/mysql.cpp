@@ -141,6 +141,43 @@ int Database::read_planets_in_universe(Database *myDatabase, std::vector<Planet>
 
 
 
+int Database::read_ships_in_universe(Database *myDatabase, std::vector<Ship> *Ships, std::string universe)
+{
+
+
+    if(connect){
+        std::string fetch = "SELECT `id`, `x`, `y`, `move_X`, `move_y`, `shield`, `shield_max`, `energy`, `hull`, `hull_max`, `loading`, `loadcapacity`, `movespeed`, `name` FROM `ships`";
+        if (universe!="*")
+            fetch += " WHERE  `universe` = " + universe;
+        MYSQL_RES *result;
+        MYSQL_ROW row;
+
+        int i = 0;
+
+
+
+        mysql_query(connect, fetch.c_str());
+        result = mysql_store_result(connect);
+
+
+        while ((row = mysql_fetch_row(result)))
+        {
+
+            i++;
+            Ships->push_back ({ atoi(row[0]), StringToNumber<float>(row[1]), StringToNumber<float>(row[2]), atoi(row[3]),  atoi(row[4]),  atoi(row[5]),  atoi(row[6]),  atoi(row[7]),  atoi(row[8]),  atoi(row[9]), row[10], atoi(row[11]), StringToNumber<float>(row[12]), row[13]});
+        }
+
+
+        mysql_free_result(result);
+
+        return i;
+
+    }
+    return -1;
+    //fprintf(stderr,"Fetch error, not connected\n");
+
+
+}
 
 
 

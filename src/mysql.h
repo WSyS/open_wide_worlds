@@ -21,6 +21,7 @@ public:
     int num_rows(const char *fetch);
     void fetch(const char *fetch);
     int read_planets_in_universe(Database *myDatabase, std::vector<Planet> *Planets, std::string universe);
+    int read_ships_in_universe(Database *myDatabase, std::vector<Ship> *Shipss, std::string universe);
     int write_planets (Database *myDatabase, std::vector<Planet> *Planets);
 
 };
