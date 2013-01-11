@@ -2,7 +2,6 @@
 
 
 
-
 bool init(SDL_Surface **screen)
 {
 
@@ -33,14 +32,11 @@ void clean_up()
 }
 
 
-
 int main( int argc, char* args[] )
 {
 
-    
     //The surfaces
     SDL_Surface *screen = NULL;
-
 
 
     //The event structure
@@ -63,7 +59,7 @@ int main( int argc, char* args[] )
     Database myDatabase("localhost", "open_wide_worlds", "game", "game");
 
 
-    
+
     while( quit == CMD_RUN )
     {
         uint8_t retval;
@@ -83,11 +79,12 @@ int main( int argc, char* args[] )
 
 }
 
+
 uint8_t Mainmenu(SDL_Surface *screen, SDL_Event event, Timer fps){
 
 
     bool quit = false;
-    
+
     Button Button_Play( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) - 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
     Button Button_Options( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ), BUTTON_ALIGN_TOPLEFT, "images/buttons/options.png");
     Button Button_Exit( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) + 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/end.png");
@@ -186,22 +183,22 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
     uint8_t quit = false;
 
-    //bool submenu = false;
+
 
     int num_planets = 0;
 
     Image Background( "", "images/bg_stars/1.png" , 0, 0, false);
 
-    //Font Planetinfo ( 0, 0, "" );
+
 
     std::vector<Window*> Windows;
 
-    window_make(&Windows,"Planet",100,100,220,180);
+    window_make(&Windows,"Planet",100,100,220,240);
     window_set_background(&Windows,"Planet",255,255,255,127);
     window_add_font(&Windows,"Planet","testid",10,0,"test",50,0,255,0);
 
 
-    
+
     window_add_button(&Windows,"Planet", "testbtn1", 10, 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
     window_add_button(&Windows,"Planet", "testbtn2", 10, 120, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
     window_add_button_event(&Windows,"Planet", "testbtn1", (new EventSetWindowBackground(&Windows,"Planet",255,255,0,50)));
@@ -209,14 +206,11 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
 
 
-Inputbox * selected_inputbox=NULL;
-//void (Inputbox::*selected_inputbox)();
+    Inputbox * selected_inputbox=NULL;
 
-Inputbox inputb1( "", 100, 300, 500, 30, "Test", 0, 255, 0, &selected_inputbox);
-Inputbox inputb2( "", 100, 350, 500, 30, "Test", 0, 255, 0, &selected_inputbox);
-Inputbox inputb3( "", 100, 400, 500, 30, "Test", 0, 255, 0, &selected_inputbox);
+    window_add_inputbox(&Windows,"Planet","testinput1",10, 180, 200, 20, "input 1", 0, 255, 0, &selected_inputbox);
+    window_add_inputbox(&Windows,"Planet","testinput2",10, 210, 200, 20, "input 2", 0, 255, 0, &selected_inputbox);
 
-//Button_Play.set_MouseDownEvent(new Foo(12,13));
 
     while( quit == CMD_RUN ){
 
@@ -237,22 +231,12 @@ Inputbox inputb3( "", 100, 400, 500, 30, "Test", 0, 255, 0, &selected_inputbox);
                 if( event.button.button == SDL_BUTTON_LEFT ){
 
 
-
-inputb1.handle_events(event);
-inputb2.handle_events(event);
-inputb3.handle_events(event);
-
-//if( event.type == SDL_MOUSEBUTTONDOWN )
-//    selected_inputbox=NULL;
-
-
-                    
                     for (int i=0; i<num_planets;i++){
                         if (Planets[i].is_mouse_over_planet ( event.button.x, event.button.y )){
                             //submenu = true;
                             //std::string tmp_text = Planets[i].get_name();
                             //Planetinfo.changetext ( tmp_text.c_str() );
-                            
+
 
                         }
                     }
@@ -262,28 +246,21 @@ inputb3.handle_events(event);
                 //submenu = false;
             }
 
-            
+
             if (selected_inputbox!=NULL)
                 selected_inputbox->parse_keys(event);
 
-            
+
             window_handle_events(&Windows, event);
 
         }
-
-
-//if (selected_inputbox!=NULL)
-//selected_inputbox->changetext("clicked from main");
-
 
 
 
         if (fps.get_ticks() >= FRAME_EVERY_MSECOND){
             fps.start();
             Background.show(screen);
-inputb1.show(screen);
-inputb2.show(screen);
-inputb3.show(screen);
+
             for (int i=0; i<num_planets;i++){
                 for (uint j=0; j<Images.size();j++){
                     if ( Images[j].get_path() == Planets[i].get_path() ){
@@ -293,10 +270,7 @@ inputb3.show(screen);
 
             }
 
-            /*            if (submenu == true){
-             *               Planetinfo.show(screen);
-        }
-        */
+
 
             for (uint i=0; i<Windows.size();i++){
                 //printf("showing: %d\n", i);
@@ -318,10 +292,10 @@ inputb3.show(screen);
 
         SDL_Delay(10);
     }
-    
+
     window_delete_all(&Windows);
     return quit;
 
 
-    
+
 }

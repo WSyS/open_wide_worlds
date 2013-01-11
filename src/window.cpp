@@ -32,6 +32,7 @@ Window::~Window()
     SDL_FreeSurface( background );
     remove_all_fonts();
     remove_all_buttons();
+    remove_all_inputboxes();
     //printf("deconst\n");
 
 }
@@ -85,7 +86,9 @@ return SDL_BlitSurface( background, NULL, screen, &box );
     for (uint i=0; i<Buttons.size();i++){
         Buttons[i]->show(windowscreen);
     }
-
+    for (uint i=0; i<Inputboxes.size();i++){
+        Inputboxes[i]->show(windowscreen);
+    }
 
     SDL_BlitSurface( windowscreen, NULL, screen, &box );
     SDL_FreeSurface( windowscreen );
@@ -145,6 +148,30 @@ void Window::remove_all_buttons(){
 }
 
 
+void window_add_inputbox(std::vector<Window*> *Windows, std::string window_id,  std::string val_id, int x, int y, int width, int height, std::string default_string, uint8_t val_r,  uint8_t val_g,  uint8_t val_b, Inputbox ** val_selected){
+    for (uint i=0; i<Windows->size();i++){
+        if (window_id==(*Windows)[i]->getid()){
+            (*Windows)[i]->add_inputbox( val_id, x, y, width, height, default_string, val_r, val_g, val_b, val_selected);
+            break;
+        }
+    }
+}
+
+
+void Window::add_inputbox( std::string val_id, int x, int y, int width, int height, std::string default_string, uint8_t val_r,  uint8_t val_g,  uint8_t val_b, Inputbox ** val_selected){
+    Inputbox * i = new Inputbox( val_id, x, y, width, height, default_string, val_r, val_g, val_b, val_selected);
+    Inputboxes.push_back(i);
+}
+
+
+void Window::remove_all_inputboxes(){
+    for (uint i=0; i<Inputboxes.size();i++){
+        delete Inputboxes[i];
+    }
+    Inputboxes.clear();
+}
+
+
 void Window::button_set_MouseDownEvent(std::string button_id, Event *event){
     for (uint i=0; i<Buttons.size();i++){
         if (button_id==Buttons[i]->getid()){
@@ -165,7 +192,10 @@ void window_add_button_event(std::vector<Window*> *Windows, std::string window_i
 
 void Window::handle_events(SDL_Event event){
     for (uint i=0; i<Buttons.size();i++){
-        Buttons[i]->handle_events(event,100,100);
+        Buttons[i]->handle_events(event,box.x,box.y);
+    }
+    for (uint i=0; i<Inputboxes.size();i++){
+        Inputboxes[i]->handle_events(event,box.x,box.y);
     }
 }
 
