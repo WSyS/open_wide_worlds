@@ -88,10 +88,16 @@ uint8_t Mainmenu(SDL_Surface *screen, SDL_Event event, Timer fps){
 
     bool quit = false;
 
+//void (Inputbox::*changetext)();
 
-Inputbox inputb1( "", 100, 100, 500, 30, "Test", 0, 255, 0);
-Inputbox inputb2( "", 100, 200, 500, 30, "Test", 0, 255, 0);
-Inputbox inputb3( "", 100, 300, 500, 30, "Test", 0, 255, 0);
+
+Inputbox * checked;
+
+
+
+Inputbox inputb1( "", 100, 100, 500, 30, "Test", 0, 255, 0, &checked);
+Inputbox inputb2( "", 100, 200, 500, 30, "Test", 0, 255, 0, &checked);
+Inputbox inputb3( "", 100, 300, 500, 30, "Test", 0, 255, 0, &checked);
 
 //inputb.changetext("asdf");
 

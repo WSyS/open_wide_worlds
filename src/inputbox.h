@@ -16,7 +16,8 @@ class Inputbox
 {
 private:
 
-
+    Inputbox * selected;
+    Inputbox ** checked;
     SDL_Color textColor = { 0, 0, 0 };
     TTF_Font *font = NULL;
     SDL_Rect box;
@@ -28,7 +29,7 @@ private:
 
 
 public:
-    Inputbox( std::string val_id, int x, int y, int width, int height, std::string default_string, uint8_t val_r,  uint8_t val_g,  uint8_t val_b);
+    Inputbox( std::string val_id, int x, int y, int width, int height, std::string default_string, uint8_t val_r,  uint8_t val_g,  uint8_t val_b, Inputbox ** val_checked);
     ~Inputbox();
     void handle_events(SDL_Event event, int offset_x = 0, int offset_y = 0);
     void show(SDL_Surface *screen);
