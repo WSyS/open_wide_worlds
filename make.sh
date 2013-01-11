@@ -7,3 +7,7 @@ echo "client ready"
 echo "making server"
 gcc -std=c++11 -lSDL -lstdc++ -o openwideworlds_server src/server.cpp src/timer.cpp src/mysql.cpp src/game.cpp `mysql_config --cflags --libs`
 echo "server ready"
+
+echo ""
+find ./src/ -type f | xargs cat | wc -l
+echo "zeilen code mit viel scheiß"

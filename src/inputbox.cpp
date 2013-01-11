@@ -3,10 +3,10 @@
 
 
 
-Inputbox::Inputbox( std::string val_id, int x, int y, int width, int height, std::string default_string, uint8_t val_r,  uint8_t val_g,  uint8_t val_b, Inputbox ** val_checked)
+Inputbox::Inputbox( std::string val_id, int x, int y, int width, int height, std::string default_string, uint8_t val_r,  uint8_t val_g,  uint8_t val_b, Inputbox ** val_selected_inputbox)
 {
 
-    checked=val_checked;
+    selected_inputbox=val_selected_inputbox;
     
     text = default_string;
     if( TTF_Init() == -1 )
@@ -81,7 +81,7 @@ void Inputbox::handle_events(SDL_Event event, int offset_x, int offset_y )
             {
                 status=INPUTBOX_ACTIVE;
                 changetext("clicked");
-                checked=selected;
+                selected_inputbox=&me;
             }
         }
     }

@@ -87,20 +87,6 @@ uint8_t Mainmenu(SDL_Surface *screen, SDL_Event event, Timer fps){
 
 
     bool quit = false;
-
-//void (Inputbox::*changetext)();
-
-
-Inputbox * checked;
-
-
-
-Inputbox inputb1( "", 100, 100, 500, 30, "Test", 0, 255, 0, &checked);
-Inputbox inputb2( "", 100, 200, 500, 30, "Test", 0, 255, 0, &checked);
-Inputbox inputb3( "", 100, 300, 500, 30, "Test", 0, 255, 0, &checked);
-
-//inputb.changetext("asdf");
-
     
     Button Button_Play( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ) - 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
     Button Button_Options( "", ( SCREEN_WIDTH / 2 ), ( SCREEN_HEIGHT/ 2 ), BUTTON_ALIGN_TOPLEFT, "images/buttons/options.png");
@@ -117,10 +103,6 @@ Inputbox inputb3( "", 100, 300, 500, 30, "Test", 0, 255, 0, &checked);
             if( SDL_PollEvent( &event ) )
             {
 
-inputb1.handle_events(event);
-inputb2.handle_events(event);
-inputb3.handle_events(event);
-                
                 if (Button_Play.handle_events(event) == BUTTON_PUSHED)
                     return RETVAL_MAIN_STARTGAME;
 
@@ -141,10 +123,6 @@ inputb3.handle_events(event);
                 Button_Play.show(screen);
                 Button_Options.show(screen);
                 Button_Exit.show(screen);
-inputb1.show(screen);
-inputb2.show(screen);
-inputb3.show(screen);
-
                 flip_screen(screen);
             }
     }
@@ -224,10 +202,18 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
 
     
-window_add_button(&Windows,"Planet", "testbtn1", 10, 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
-window_add_button(&Windows,"Planet", "testbtn2", 10, 120, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
-window_add_button_event(&Windows,"Planet", "testbtn1", (new EventSetWindowBackground(&Windows,"Planet",255,255,0,50)));
-window_add_button_event(&Windows,"Planet", "testbtn2", (new EventSetWindowBackground(&Windows,"Planet",255,255,0,0)));
+    window_add_button(&Windows,"Planet", "testbtn1", 10, 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
+    window_add_button(&Windows,"Planet", "testbtn2", 10, 120, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
+    window_add_button_event(&Windows,"Planet", "testbtn1", (new EventSetWindowBackground(&Windows,"Planet",255,255,0,50)));
+    window_add_button_event(&Windows,"Planet", "testbtn2", (new EventSetWindowBackground(&Windows,"Planet",255,255,0,0)));
+
+
+
+Inputbox * selected_inputbox=NULL;
+
+Inputbox inputb1( "", 100, 300, 500, 30, "Test", 0, 255, 0, &selected_inputbox);
+Inputbox inputb2( "", 100, 350, 500, 30, "Test", 0, 255, 0, &selected_inputbox);
+Inputbox inputb3( "", 100, 400, 500, 30, "Test", 0, 255, 0, &selected_inputbox);
 
 //Button_Play.set_MouseDownEvent(new Foo(12,13));
 
@@ -248,6 +234,19 @@ window_add_button_event(&Windows,"Planet", "testbtn2", (new EventSetWindowBackgr
             if( event.type == SDL_MOUSEBUTTONDOWN )
             {
                 if( event.button.button == SDL_BUTTON_LEFT ){
+
+
+
+inputb1.handle_events(event);
+inputb2.handle_events(event);
+inputb3.handle_events(event);
+if (selected_inputbox!=NULL)
+    selected_inputbox->changetext("asdf");
+if( event.type == SDL_MOUSEBUTTONDOWN )
+    selected_inputbox=NULL;
+
+
+                    
                     for (int i=0; i<num_planets;i++){
                         if (Planets[i].is_mouse_over_planet ( event.button.x, event.button.y )){
                             //submenu = true;
@@ -276,6 +275,9 @@ window_add_button_event(&Windows,"Planet", "testbtn2", (new EventSetWindowBackgr
         if (fps.get_ticks() >= FRAME_EVERY_MSECOND){
             fps.start();
             Background.show(screen);
+inputb1.show(screen);
+inputb2.show(screen);
+inputb3.show(screen);
             for (int i=0; i<num_planets;i++){
                 for (uint j=0; j<Images.size();j++){
                     if ( Images[j].get_path() == Planets[i].get_path() ){
