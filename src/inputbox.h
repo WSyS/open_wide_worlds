@@ -16,7 +16,7 @@ class Inputbox
 {
 private:
 
-    Inputbox * me;
+    Inputbox * me = this;
     Inputbox ** selected_inputbox;
     
     SDL_Color textColor = { 0, 0, 0 };
@@ -37,6 +37,7 @@ public:
     std::string getid();
     int getstatus();
     void changetext ( std::string Text );
+    void parse_keys(SDL_Event event);
 };
 
 

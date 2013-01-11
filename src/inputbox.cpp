@@ -80,8 +80,8 @@ void Inputbox::handle_events(SDL_Event event, int offset_x, int offset_y )
             if( ( x > box.x ) && ( x < box.x + box.w ) && ( y > box.y ) && ( y < box.y + box.h ) )
             {
                 status=INPUTBOX_ACTIVE;
-                changetext("clicked");
                 selected_inputbox=&me;
+                printf("pointer: set\n");
             }
         }
     }
@@ -133,4 +133,64 @@ int Inputbox::getstatus(){
 void Inputbox::changetext ( std::string Text ){
     
     message = TTF_RenderText_Solid( font, Text.c_str(), textColor );
+}
+
+
+void Inputbox::parse_keys(SDL_Event event )
+{
+        printf("keydown in funct\n");
+
+    if( event.type == SDL_KEYDOWN )
+    {
+        //Keep a copy of the current version of the string
+        std::string temp = text;
+
+        //If the string less than maximum size
+        if( text.length() <= 16 )
+        {
+            //If the key is a space
+            if( event.key.keysym.unicode == (Uint16)' ' )
+            {
+                //Append the character
+                text += (char)event.key.keysym.unicode;
+            }
+            //If the key is a number
+            else if( ( event.key.keysym.unicode >= (Uint16)'0' ) && ( event.key.keysym.unicode <= (Uint16)'9' ) )
+            {
+                //Append the character
+                text += (char)event.key.keysym.unicode;
+            }
+            //If the key is a uppercase letter
+            else if( ( event.key.keysym.unicode >= (Uint16)'A' ) && ( event.key.keysym.unicode <= (Uint16)'Z' ) )
+            {
+                //Append the character
+                text += (char)event.key.keysym.unicode;
+            }
+            //If the key is a lowercase letter
+            else if( ( event.key.keysym.unicode >= (Uint16)'a' ) && ( event.key.keysym.unicode <= (Uint16)'z' ) )
+            {
+                printf("key=%d\n",(char)event.key.keysym.unicode);
+                //Append the character
+                text += (char)event.key.keysym.unicode;
+            }
+        }
+
+        //If backspace was pressed and the string isn't blank
+        if( ( event.key.keysym.sym == SDLK_BACKSPACE ) && ( text.length() != 0 ) )
+        {
+            //Remove a character from the end
+            text.erase( text.length() - 1 );
+        }
+
+        //If the string was changed
+        if( text != temp )
+        {
+            //Free the old surface
+            //SDL_FreeSurface( message );
+
+            //Render a new text surface
+            //text = TTF_RenderText_Solid( font, str.c_str(), textColor );
+            changetext(text);
+        }
+    }
 }

@@ -210,6 +210,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
 
 Inputbox * selected_inputbox=NULL;
+//void (Inputbox::*selected_inputbox)();
 
 Inputbox inputb1( "", 100, 300, 500, 30, "Test", 0, 255, 0, &selected_inputbox);
 Inputbox inputb2( "", 100, 350, 500, 30, "Test", 0, 255, 0, &selected_inputbox);
@@ -240,10 +241,9 @@ Inputbox inputb3( "", 100, 400, 500, 30, "Test", 0, 255, 0, &selected_inputbox);
 inputb1.handle_events(event);
 inputb2.handle_events(event);
 inputb3.handle_events(event);
-if (selected_inputbox!=NULL)
-    selected_inputbox->changetext("asdf");
-if( event.type == SDL_MOUSEBUTTONDOWN )
-    selected_inputbox=NULL;
+
+//if( event.type == SDL_MOUSEBUTTONDOWN )
+//    selected_inputbox=NULL;
 
 
                     
@@ -262,12 +262,17 @@ if( event.type == SDL_MOUSEBUTTONDOWN )
                 //submenu = false;
             }
 
+            /*if (selected_inputbox!=NULL){
+                printf("keydown\n");
+                selected_inputbox->parse_keys(event);
+            }*/
             window_handle_events(&Windows, event);
 
         }
 
 
-
+if (selected_inputbox!=NULL)
+    selected_inputbox->changetext("clicked");
 
 
 
