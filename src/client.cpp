@@ -173,6 +173,7 @@ uint8_t Optionmenu(SDL_Surface *screen, SDL_Event event, Timer fps){
 uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDatabase){
 
     std::vector<Planet> Planets;
+    std::vector<Ship> Ships;
 
     std::vector<Image> Images (2);
     Images[0].load_image("images/planets/1.png" , 0, 0, false);

@@ -54,29 +54,38 @@ public:
 
 
 
-class Spaceship
+class Ship
 {
 private:
 
     int id;
-    int x;
-    int y;
-    float rotation;
+    float x;
+    float y;
     int move_x;
     int move_y;
+    int shield;
+    int shield_max;
+    int energy;
+    int hull;
+    int hull_max;
+    std::string loading;
+    int loadcapacity;
+    float movespeed;
     std::string name;
 
+    SDL_Surface *image = NULL;
 
 public:
 
-    Spaceship( int val_id, int val_x, int val_y, float val_rotation, int val_move_x, int val_move_y, const char *val_name );
-    ~Spaceship();
+    Ship( int val_id, float val_x, float val_y, int val_move_x, int val_move_y, int val_shield, int val_shield_max, int val_energy, int val_hull, int val_hull_max, std::string val_loading, int val_loadcapacity, float val_movespeed, std::string val_name);
+    ~Ship();
     int getid();
-    int getx();
-    int gety();
-    float getrotation();
+    float getx();
+    float gety();
     std::string get_name();
     int is_mouse_over_ship( int val_x, int val_y );
+    void show(SDL_Surface *screen);
+
 };
 
 

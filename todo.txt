@@ -1,3 +1,5 @@
+event-spot erstellen und einfügen
+fenster verschiebbar und schließbar machen
 planeten oval bewegen lassen, derzeit wird nur der kleinere wert verwendet
 raumschiffe einfügen
 population auf raumschiffen und planeten

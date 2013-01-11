@@ -2,7 +2,7 @@
 
 
 #include <iostream>
-
+/*
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination, SDL_Rect* clip = NULL )
 {
     //Holds offsets
@@ -38,7 +38,7 @@ void stretch_apply_surface( int x, int y, int width, int height, SDL_Surface* so
         SDL_FreeSurface( rotatet );
 
 
-}
+}*/
 
 void flip_screen(SDL_Surface *screen){
     if( SDL_Flip( screen ) == -1 )
@@ -48,8 +48,11 @@ void flip_screen(SDL_Surface *screen){
     }
 }
 
+
+
+
 /*
- S DL****_Surface *load_image( const char *path, bool usealpha){
+ SDL****_Surface *load_image( const char *path, bool usealpha){
      SDL_Surface *image = NULL;
      image = IMG_Load( path );
      if (usealpha)
@@ -59,7 +62,7 @@ void flip_screen(SDL_Surface *screen){
      
  }*/
 
-
+/*
 //rotate image
 SDL_Surface* rotate(SDL_Surface* source, double angle, double zoom, int smooth)
 {
@@ -79,4 +82,4 @@ SDL_Surface* rotate(SDL_Surface* source, double angle, double zoom, int smooth)
     SDL_FreeSurface( rotatefile );
 
     return optimizedrotate;
-}
+}*/

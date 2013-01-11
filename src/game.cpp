@@ -127,55 +127,85 @@ int Planet::is_mouse_over_planet( int val_x, int val_y ){
 
 
 
-
-
-Spaceship::Spaceship( int val_id, int val_x, int val_y, float val_rotation, int val_move_x, int val_move_y, const char *val_name )
+Ship::Ship( int val_id, float val_x, float val_y, int val_move_x, int val_move_y, int val_shield, int val_shield_max, int val_energy, int val_hull, int val_hull_max, std::string val_loading, int val_loadcapacity, float val_movespeed, std::string val_name)
 {
-    //printf("make %s\n", planet_name);
-    id=val_id;
-    x=val_x;
-    y=val_y;
-    rotation=val_rotation;
-    move_x=val_move_x;
-    move_y=val_move_y;
-    name=val_name;
+
+    Uint32 rmask, gmask, bmask, amask;
+    #if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    rmask = 0xff000000;
+    gmask = 0x00ff0000;
+    bmask = 0x0000ff00;
+    amask = 0x000000ff;
+    #else
+    rmask = 0x000000ff;
+    gmask = 0x0000ff00;
+    bmask = 0x00ff0000;
+    amask = 0xff000000;
+    #endif
+
+
+    image = SDL_CreateRGBSurface(SDL_SWSURFACE, SHIPSIZE, SHIPSIZE, 32, rmask, gmask, bmask, amask);
+    SDL_Rect fillbox = {0,0,SHIPSIZE,SHIPSIZE};
+    Uint32 colour = SDL_MapRGBA(image->format, 128, 128, 128, 128);
+    SDL_FillRect(image, &fillbox, colour);
+
+
+    id = val_id;
+    x = val_x;
+    y = val_y;
+    move_x = val_move_x;
+    move_y = val_move_y;
+    shield = val_shield;
+    shield_max = val_shield_max;
+    energy = val_energy;
+    hull = val_hull;
+    hull_max = val_hull_max;
+    loading = val_loading;
+    loadcapacity = val_loadcapacity;
+    movespeed = val_movespeed;
+    name = val_name;
 }
 
-Spaceship::~Spaceship()
+Ship::~Ship()
 {
-    //printf("destroy %s\n", name);
+    SDL_FreeSurface( image );
 
 }
 
 
-int Spaceship::getid(){
+int Ship::getid(){
     return id;
 }
 
-int Spaceship::getx(){
+float Ship::getx(){
     return x;
 }
 
-int Spaceship::gety(){
+float Ship::gety(){
     return y;
 }
 
-float Spaceship::getrotation(){
-    return rotation;
-}
 
+std::string Ship::get_name(){
 
-std::string Spaceship::get_name(){
-
-    return name.c_str();
+    return name;
 
 }
 
 
-int Spaceship::is_mouse_over_ship( int val_x, int val_y ){
+int Ship::is_mouse_over_ship( int val_x, int val_y ){
 
     if( ( val_x > x ) && ( val_x < x + SHIPSIZE ) && ( val_y > y ) && ( val_y < y + SHIPSIZE ) ) {
         return 1;
     }
     return 0;
+}
+
+
+void Ship::show(SDL_Surface *screen)
+{
+
+    SDL_Rect box = {(Sint16)x, (Sint16)y, 0, 0};
+    SDL_BlitSurface( image, NULL, screen, &box );
+
 }
