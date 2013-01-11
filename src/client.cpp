@@ -262,17 +262,18 @@ inputb3.handle_events(event);
                 //submenu = false;
             }
 
-            /*if (selected_inputbox!=NULL){
-                printf("keydown\n");
+            
+            if (selected_inputbox!=NULL)
                 selected_inputbox->parse_keys(event);
-            }*/
+
+            
             window_handle_events(&Windows, event);
 
         }
 
 
-if (selected_inputbox!=NULL)
-    selected_inputbox->changetext("clicked");
+//if (selected_inputbox!=NULL)
+//selected_inputbox->changetext("clicked from main");
 
 
 
