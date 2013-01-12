@@ -146,7 +146,7 @@ Ship::Ship( int val_id, float val_x, float val_y, int val_move_x, int val_move_y
 
     image = SDL_CreateRGBSurface(SDL_SWSURFACE, SHIPSIZE, SHIPSIZE, 32, rmask, gmask, bmask, amask);
     SDL_Rect fillbox = {0,0,SHIPSIZE,SHIPSIZE};
-    Uint32 colour = SDL_MapRGBA(image->format, 128, 128, 128, 128);
+    Uint32 colour = SDL_MapRGBA(image->format, 0, 0, 0, 0);
     SDL_FillRect(image, &fillbox, colour);
 
 
@@ -168,8 +168,7 @@ Ship::Ship( int val_id, float val_x, float val_y, int val_move_x, int val_move_y
 
 Ship::~Ship()
 {
-    SDL_FreeSurface( image );
-
+    //SDL_FreeSurface( image );
 }
 
 
@@ -205,6 +204,8 @@ int Ship::is_mouse_over_ship( int val_x, int val_y ){
 void Ship::show(SDL_Surface *screen)
 {
 
+    Uint32 colour = SDL_MapRGBA(image->format, 0, 255, 0, 255);
+    fill_circle(image,25,25,10,colour);
     SDL_Rect box = {(Sint16)x, (Sint16)y, 0, 0};
     SDL_BlitSurface( image, NULL, screen, &box );
 

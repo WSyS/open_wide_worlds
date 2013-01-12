@@ -5,7 +5,7 @@ g++ -std=c++11 -lSDL -lSDL_image -lSDL_gfx -lSDL_ttf -lstdc++ -o openwideworlds_
 echo "client ready"
 
 echo "making server"
-gcc -std=c++11 -lSDL -lstdc++ -o openwideworlds_server src/server.cpp src/timer.cpp src/mysql.cpp src/game.cpp `mysql_config --cflags --libs`
+gcc -std=c++11 -lSDL -lstdc++ -o openwideworlds_server src/server.cpp src/timer.cpp src/mysql.cpp src/draw.cpp src/game.cpp `mysql_config --cflags --libs`
 echo "server ready"
 
 echo ""

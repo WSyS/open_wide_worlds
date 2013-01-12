@@ -184,10 +184,6 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
     uint8_t quit = false;
 
-
-
-    int num_planets = 0;
-
     Image Background( "", "images/bg_stars/1.png" , 0, 0, false);
 
 
@@ -232,7 +228,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
                 if( event.button.button == SDL_BUTTON_LEFT ){
 
 
-                    for (int i=0; i<num_planets;i++){
+                    for (int i=0; i<(int)Planets.size();i++){
                         if (Planets[i].is_mouse_over_planet ( event.button.x, event.button.y )){
                             //submenu = true;
                             //std::string tmp_text = Planets[i].get_name();
@@ -262,7 +258,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
             fps.start();
             Background.show(screen);
 
-            for (int i=0; i<num_planets;i++){
+            for (int i=0; i<(int)Planets.size();i++){
                 for (uint j=0; j<Images.size();j++){
                     if ( Images[j].get_path() == Planets[i].get_path() ){
                         Images[j].show(screen, Planets[i].getx(), Planets[i].gety(), Planets[i].getsize(), Planets[i].getsize(),Planets[i].getrotation());
@@ -271,7 +267,9 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
             }
 
-
+            for (int i=0; i<(int)Ships.size();i++){
+                        Ships[i].show(screen);
+            }
 
             for (uint i=0; i<Windows.size();i++){
                 //printf("showing: %d\n", i);
@@ -286,9 +284,10 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
         if (database_timer.get_ticks() >= REFRESH_DATABASE_EVERY_MSECOND){
             database_timer.start();
             Planets.clear();
-            num_planets = myDatabase->read_planets_in_universe(myDatabase, &Planets, "0");
+            myDatabase->read_planets_in_universe(myDatabase, &Planets, "0");
+            Ships.clear();
+            myDatabase->read_ships_in_universe(myDatabase, &Ships, "0");
         }
-
 
 
         SDL_Delay(10);
