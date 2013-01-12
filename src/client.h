@@ -38,6 +38,8 @@ const int FRAME_EVERY_MSECOND = 100;
 const int REFRESH_DATABASE_EVERY_MSECOND = 333;
 
 
+void flip_screen(SDL_Surface *screen);
+
 uint8_t Mainmenu(SDL_Surface *screen, SDL_Event event, Timer fps);
 uint8_t Optionmenu(SDL_Surface *screen, SDL_Event event, Timer fps);
 uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDatabase);

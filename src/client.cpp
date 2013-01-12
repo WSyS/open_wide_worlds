@@ -1,6 +1,14 @@
 #include "client.h"
 
 
+void flip_screen(SDL_Surface *screen){
+    if( SDL_Flip( screen ) == -1 )
+    {
+        fprintf(stderr,"Error while flip screen\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
 
 bool init(SDL_Surface **screen)
 {
