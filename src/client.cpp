@@ -195,7 +195,10 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
     window_add_font(&Windows,"Planet","testid",10,0,"test",50,0,255,0);
 
 
+    window_add_button(&Windows,"Planet", "close", 200, 0, BUTTON_ALIGN_TOPLEFT, "images/buttons/close.png");
+    window_add_button_event(&Windows,"Planet", "close", (new EventCloseWindow(&Windows,"Planet")));
 
+    
     window_add_button(&Windows,"Planet", "testbtn1", 10, 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
     window_add_button(&Windows,"Planet", "testbtn2", 10, 120, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
     window_add_button_event(&Windows,"Planet", "testbtn1", (new EventSetWindowBackground(&Windows,"Planet",255,255,0,50)));
@@ -216,6 +219,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
         if( keystates[ SDLK_ESCAPE ] ) {
             quit = CMD_ABORT;
         }
+        
         while( SDL_PollEvent( &event ) )
         {
 
@@ -225,22 +229,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
 
             if( event.type == SDL_MOUSEBUTTONDOWN )
             {
-                if( event.button.button == SDL_BUTTON_LEFT ){
-
-
-                    for (int i=0; i<(int)Planets.size();i++){
-                        if (Planets[i].is_mouse_over_planet ( event.button.x, event.button.y )){
-                            //submenu = true;
-                            //std::string tmp_text = Planets[i].get_name();
-                            //Planetinfo.changetext ( tmp_text.c_str() );
-
-
-                        }
-                    }
-                }
-            }
-            if( event.type == SDL_MOUSEBUTTONUP ){
-                //submenu = false;
+                selected_inputbox=NULL;
             }
 
 
@@ -293,7 +282,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
         SDL_Delay(10);
     }
 
-    window_delete_all(&Windows);
+    window_close_all(&Windows);
     return quit;
 
 

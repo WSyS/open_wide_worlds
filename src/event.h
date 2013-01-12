@@ -30,7 +30,6 @@ public:
 class EventSetWindowBackground : public Event
 {
 private:
-
     std::vector<Window*> *Windows;
     std::string id;
     int r;
@@ -42,6 +41,17 @@ public:
     void DoEvent();
 };
 
+
+
+class EventCloseWindow : public Event
+{
+private:
+    std::vector<Window*> *Windows;
+    std::string id;
+public:
+    EventCloseWindow(std::vector<Window*> *val_Windows, std::string val_id);
+    void DoEvent();
+};
 
 
 /*

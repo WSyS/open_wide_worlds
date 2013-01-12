@@ -48,8 +48,8 @@ void window_add_button(std::vector<Window*> *Windows, std::string window_id, std
 void window_add_button_event(std::vector<Window*> *Windows, std::string window_id, std::string val_id, Event *event );
 void window_add_inputbox(std::vector<Window*> *Windows, std::string window_id, std::string button_id, int x, int y, int width, int height, std::string default_string, uint8_t val_r,  uint8_t val_g,  uint8_t val_b, Inputbox ** val_selected);
 void window_make(std::vector<Window*> *Windows, std::string val_id, int x, int y, int width, int height);
-void window_delete(std::vector<Window*> *Windows, std::string val_id);
-void window_delete_all(std::vector<Window*> *Windows);
+void window_close(std::vector<Window*> *Windows, std::string val_id);
+void window_close_all(std::vector<Window*> *Windows);
 void window_set_background(std::vector<Window*> *Windows, std::string val_id, int r, int g, int b, int a);
 void window_handle_events(std::vector<Window*> *Windows, SDL_Event event);
 #endif

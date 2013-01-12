@@ -12,13 +12,24 @@ EventSetWindowBackground::EventSetWindowBackground(std::vector<Window*> *val_Win
 
 
 void EventSetWindowBackground::DoEvent() {
-    for (uint i=0; i<Windows->size();i++){
-        if (id==(*Windows)[i]->getid()){
-            (*Windows)[i]->set_background(r, g, b, a);
-            break;
-        }
-    }
+
+    window_set_background(Windows, id, r, g, b, a);
+
 }
+
+
+EventCloseWindow::EventCloseWindow(std::vector<Window*> *val_Windows, std::string val_id){
+    Windows=val_Windows;
+    id=val_id;
+}
+
+
+void EventCloseWindow::DoEvent() {
+
+    window_close(Windows, id);
+
+}
+
 
 /*
 

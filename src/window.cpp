@@ -206,7 +206,7 @@ void window_make(std::vector<Window*> *Windows, std::string id, int x, int y, in
 }
 
 
-void window_delete(std::vector<Window*> *Windows, std::string id){
+void window_close(std::vector<Window*> *Windows, std::string id){
     for (uint i=0; i<Windows->size();i++){
         if (id==(*Windows)[i]->getid()){
             delete (*Windows)[i];
@@ -217,7 +217,7 @@ void window_delete(std::vector<Window*> *Windows, std::string id){
 }
 
 
-void window_delete_all(std::vector<Window*> *Windows){
+void window_close_all(std::vector<Window*> *Windows){
     for (uint i=0; i<Windows->size();i++){
         delete (*Windows)[i];
     }
