@@ -6,6 +6,9 @@
 #define RETVAL_MAIN_STARTGAME 1
 #define RETVAL_MAIN_OPTIONS 2
 
+
+#define KEY_TOG_SELECTED_SHIP_WINDOW 's'
+
 #define CMD_QUIT 255
 #define CMD_ABORT 1
 #define CMD_RUN 0

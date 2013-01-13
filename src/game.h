@@ -7,6 +7,8 @@
 
 #include "draw.h"
 #include "window.h"
+#include "button.h"
+#include "event.h"
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include <string>
@@ -93,5 +95,6 @@ public:
 
 
 void fill_window_with_ships(std::vector<Window*> *Windows, std::vector<int> selected_ships, std::vector<Ship> Ships);
+void tog_selected_ships_window(std::vector<Window*> *Windows, std::vector<int> selected_ships, std::vector<Ship> Ships);
 
 #endif

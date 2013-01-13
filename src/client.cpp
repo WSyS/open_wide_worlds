@@ -222,15 +222,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
     window_add_inputbox(&Windows,"Planet","testinput2",10, 210, 200, 20, "input 2", 0, 255, 0, &selected_inputbox);
 
 
-
-
-
-    window_make(&Windows,"selected_ships",10,10,220,240);
-    window_set_background(&Windows,"selected_ships",255,255,255,127);
-    window_add_font(&Windows,"selected_ships","testid",10,0,"selected ships:",15,0,255,0);
-    
-
-    
+    tog_selected_ships_window(&Windows,selected_ships,Ships);
 
     int mousedown_x=-1,mousedown_y=-1;
 
@@ -275,9 +267,13 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
             }
 
 
-            if (selected_inputbox!=NULL)
+            if (selected_inputbox!=NULL){
                 selected_inputbox->parse_keys(event);
-
+            }else{
+                if( event.key.keysym.unicode == (Uint16)KEY_TOG_SELECTED_SHIP_WINDOW ){
+                    tog_selected_ships_window(&Windows,selected_ships,Ships);
+                }
+            }
 
             window_handle_events(&Windows, event);
 

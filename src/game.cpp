@@ -281,3 +281,18 @@ void fill_window_with_ships(std::vector<Window*> *Windows, std::vector<int> sele
         
     }
 }
+
+
+void tog_selected_ships_window(std::vector<Window*> *Windows, std::vector<int> selected_ships, std::vector<Ship> Ships){
+    for (uint i=0; i<Windows->size();i++){
+        if ("selected_ships"==(*Windows)[i]->getid()){
+            window_close(Windows,"selected_ships");
+            return;
+        }
+    }
+    window_make(Windows,"selected_ships",10,10,220,240);
+    window_set_background(Windows,"selected_ships",255,255,255,127);
+    window_add_button(Windows,"selected_ships", "close", 200, 0, BUTTON_ALIGN_TOPLEFT, "images/buttons/close.png");
+    window_add_button_event(Windows,"selected_ships", "close", (new EventCloseWindow(Windows,"selected_ships")));
+    fill_window_with_ships(Windows,selected_ships,Ships);
+}
