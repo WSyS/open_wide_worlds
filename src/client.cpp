@@ -195,10 +195,12 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
     Image Background( "", "images/bg_stars/1.png" , 0, 0, false);
 
 
+    std::vector<int> selected_ships;
+
 
     std::vector<Window*> Windows;
 
-    window_make(&Windows,"Planet",100,100,220,240);
+    window_make(&Windows,"Planet",1500,10,220,240);
     window_set_background(&Windows,"Planet",255,255,255,127);
     window_add_font(&Windows,"Planet","testid",10,0,"test",50,0,255,0);
 
@@ -206,7 +208,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
     window_add_button(&Windows,"Planet", "close", 200, 0, BUTTON_ALIGN_TOPLEFT, "images/buttons/close.png");
     window_add_button_event(&Windows,"Planet", "close", (new EventCloseWindow(&Windows,"Planet")));
 
-    
+
     window_add_button(&Windows,"Planet", "testbtn1", 10, 60, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
     window_add_button(&Windows,"Planet", "testbtn2", 10, 120, BUTTON_ALIGN_TOPLEFT, "images/buttons/play.png");
     window_add_button_event(&Windows,"Planet", "testbtn1", (new EventSetWindowBackground(&Windows,"Planet",255,255,0,50)));
@@ -220,6 +222,18 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
     window_add_inputbox(&Windows,"Planet","testinput2",10, 210, 200, 20, "input 2", 0, 255, 0, &selected_inputbox);
 
 
+
+
+
+    window_make(&Windows,"selected_ships",10,10,220,240);
+    window_set_background(&Windows,"selected_ships",255,255,255,127);
+    window_add_font(&Windows,"selected_ships","testid",10,0,"selected ships:",15,0,255,0);
+    
+
+    
+
+    int mousedown_x=-1,mousedown_y=-1;
+
     while( quit == CMD_RUN ){
 
 
@@ -227,7 +241,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
         if( keystates[ SDLK_ESCAPE ] ) {
             quit = CMD_ABORT;
         }
-        
+
         while( SDL_PollEvent( &event ) )
         {
 
@@ -235,9 +249,29 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
                 quit = CMD_QUIT;
 
 
-            if( event.type == SDL_MOUSEBUTTONDOWN )
+            if( event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT)
             {
+
                 selected_inputbox=NULL;
+
+                mousedown_x=event.motion.x;
+                mousedown_y=event.motion.y;
+
+            }
+
+
+            if( event.type == SDL_MOUSEBUTTONUP &&  event.button.button == SDL_BUTTON_LEFT)
+            {
+                if (mousedown_x != -1 && mousedown_y != -1){
+                    selected_ships.clear();
+                    for (int i=0; i<(int)Ships.size();i++){
+                        if (Ships[i].is_ship_in_rect(event.motion.x, event.motion.y,mousedown_x,mousedown_y))
+                            selected_ships.push_back(Ships[i].getid());
+                    }
+                    fill_window_with_ships(&Windows,selected_ships,Ships);
+                    mousedown_x=-1;
+                    mousedown_y=-1;
+                }
             }
 
 
@@ -265,7 +299,7 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
             }
 
             for (int i=0; i<(int)Ships.size();i++){
-                        Ships[i].show(screen);
+                Ships[i].show(screen);
             }
 
             for (uint i=0; i<Windows.size();i++){

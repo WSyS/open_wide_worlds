@@ -201,6 +201,43 @@ int Ship::is_mouse_over_ship( int val_x, int val_y ){
 }
 
 
+int Ship::is_ship_in_rect( int val_x, int val_y, int val_x2, int val_y2 ){
+
+    if (val_x > val_x2){
+        int tmp=val_x2;
+        val_x2=val_x;
+        val_x=tmp;
+    }
+
+    if (val_y > val_y2){
+        int tmp=val_y2;
+        val_y2=val_y;
+        val_y=tmp;
+    }
+
+
+    //printf("x=%d y=%d x2=%d y2=%d:\n", val_x,val_y, val_x2,val_y2);
+
+    if ( x + SHIPSIZE < val_x )
+        return false;
+
+    if ( x > val_x2 )
+        return false;
+
+    if ( y + SHIPSIZE < val_y )
+        return false;
+
+    if ( y > val_y2 )
+        return false;
+    /*if( ( val_x < x ) && ( val_x2 > x + SHIPSIZE ) && ( val_y < y ) && ( val_y2 > y + SHIPSIZE )) {
+     *       return 1;
+}*/
+
+
+    return true;
+}
+
+
 void Ship::show(SDL_Surface *screen)
 {
 
@@ -209,4 +246,38 @@ void Ship::show(SDL_Surface *screen)
     SDL_Rect box = {(Sint16)x, (Sint16)y, 0, 0};
     SDL_BlitSurface( image, NULL, screen, &box );
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+void fill_window_with_ships(std::vector<Window*> *Windows, std::vector<int> selected_ships, std::vector<Ship> Ships){
+
+    for (uint i=0; i<Windows->size();i++){
+        if ("selected_ships"==(*Windows)[i]->getid()){
+            (*Windows)[i]->remove_all_fonts();
+            window_add_font(Windows,"selected_ships","selected_ships",10,0,"selected ships:",15,0,255,0);
+            for (int i=0; i<(int)selected_ships.size();i++){
+                std::string shipname="err: name not found";
+                for (int j=0; j<(int)Ships.size();j++){
+                    if (Ships[j].getid()==selected_ships[i]){
+                        shipname=Ships[j].get_name();
+                        break;
+                    }
+                }
+                window_add_font(Windows,"selected_ships",shipname.c_str(),10 ,15 * i + 20 ,shipname.c_str(),15,255,255,0);
+            }
+            break;
+        }
+        
+    }
 }

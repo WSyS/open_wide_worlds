@@ -6,10 +6,11 @@
 #define SHIPSIZE 50
 
 #include "draw.h"
+#include "window.h"
 #include "SDL/SDL.h"
 #include "SDL/SDL_image.h"
 #include <string>
-
+#include <vector>
 
 class Planet
 {
@@ -84,9 +85,13 @@ public:
     float gety();
     std::string get_name();
     int is_mouse_over_ship( int val_x, int val_y );
+    int is_ship_in_rect( int val_x, int val_y, int val_x2, int val_y2 );
     void show(SDL_Surface *screen);
 
 };
 
+
+
+void fill_window_with_ships(std::vector<Window*> *Windows, std::vector<int> selected_ships, std::vector<Ship> Ships);
 
 #endif
