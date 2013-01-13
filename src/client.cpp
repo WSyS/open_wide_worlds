@@ -252,6 +252,25 @@ uint8_t Gameloop(SDL_Surface *screen, SDL_Event event, Timer fps, Database *myDa
             }
 
 
+
+            if( event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_RIGHT)
+            {
+                for (int i=0; i<(int)selected_ships.size();i++){
+                    for (int j=0; j<(int)Ships.size();j++){
+                        if (Ships[j].getid()==selected_ships[i]){
+                            Ships[j].set_new_xy(myDatabase,event.motion.x, event.motion.y);
+                            break;
+                        }
+                    }
+
+                }
+                /*for (int i=0; i<(int)Ships.size();i++){
+                 *                   Ships[i].set_new_xy(myDatabase,event.motion.x, event.motion.y);
+            }*/
+            }
+
+
+
             if( event.type == SDL_MOUSEBUTTONUP &&  event.button.button == SDL_BUTTON_LEFT)
             {
                 if (mousedown_x != -1 && mousedown_y != -1){

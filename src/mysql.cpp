@@ -227,3 +227,26 @@ int Database::write_planets ( Database *myDatabase, std::vector<Planet> *Planets
 
 }
 
+
+
+int Database::write_in_database ( Database *myDatabase, std::string fetch)
+{
+    if(connect){
+
+        int retval = 0;
+
+            //printf("%s\n", fetch.c_str());
+
+
+            if (mysql_query(connect, fetch.c_str()) == 0) {
+                
+            } else {
+                retval = -2;
+                
+            }
+
+        return retval;
+    }
+    return -1;
+
+}

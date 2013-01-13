@@ -5,6 +5,7 @@
 
 #define SHIPSIZE 50
 
+#include "mysql.h"
 #include "draw.h"
 #include "window.h"
 #include "button.h"
@@ -13,6 +14,9 @@
 #include "SDL/SDL_image.h"
 #include <string>
 #include <vector>
+
+
+class Database;
 
 class Planet
 {
@@ -89,6 +93,7 @@ public:
     int is_mouse_over_ship( int val_x, int val_y );
     int is_ship_in_rect( int val_x, int val_y, int val_x2, int val_y2 );
     void show(SDL_Surface *screen);
+    void set_new_xy(Database *myDatabase, int new_x, int new_y);
 
 };
 

@@ -249,7 +249,21 @@ void Ship::show(SDL_Surface *screen)
 }
 
 
+void Ship::set_new_xy(Database *myDatabase, int new_x, int new_y){
 
+            std::string fetch;
+
+            fetch = "UPDATE `ships` SET `move_x` = '";
+            fetch += NumberToString(new_x);
+            fetch += "', `move_y` = '";
+            fetch += NumberToString(new_y);
+            fetch += "' WHERE `ships`.`id` = ";
+            fetch += NumberToString(id);
+            fetch += ";" ;
+
+
+    (*myDatabase).write_in_database(myDatabase,fetch);
+}
 
 
 
