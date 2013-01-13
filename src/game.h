@@ -94,7 +94,8 @@ public:
     int is_ship_in_rect( int val_x, int val_y, int val_x2, int val_y2 );
     void show(SDL_Surface *screen);
     void set_new_xy(Database *myDatabase, int new_x, int new_y);
-
+    int move ();
+    void calc_population();
 };
 
 

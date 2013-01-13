@@ -251,23 +251,41 @@ void Ship::show(SDL_Surface *screen)
 
 void Ship::set_new_xy(Database *myDatabase, int new_x, int new_y){
 
-            std::string fetch;
+    std::string fetch;
 
-            fetch = "UPDATE `ships` SET `move_x` = '";
-            fetch += NumberToString(new_x);
-            fetch += "', `move_y` = '";
-            fetch += NumberToString(new_y);
-            fetch += "' WHERE `ships`.`id` = ";
-            fetch += NumberToString(id);
-            fetch += ";" ;
+    fetch = "UPDATE `ships` SET `move_x` = '";
+    fetch += NumberToString(new_x);
+    fetch += "', `move_y` = '";
+    fetch += NumberToString(new_y);
+    fetch += "' WHERE `ships`.`id` = ";
+    fetch += NumberToString(id);
+    fetch += ";" ;
 
 
     (*myDatabase).write_in_database(myDatabase,fetch);
 }
 
 
+int Ship::move (){
+
+    float entfernung=sqrt(((move_x-x)*(move_x-x)) + ((move_y-y)*(move_y-y)));
+
+    if (entfernung>movespeed){
+        x=x+(movespeed*cos(atan(((move_y-y)/(move_x/x)))));
+        y=y+(movespeed*sin(atan(((move_y-y)/(move_x/x)))));
+        return 1;
+    }else{
+        x=move_x;
+        y=move_y;
+        return 0;
+    }
+
+}
 
 
+void Ship::calc_population(){
+
+}
 
 
 
@@ -292,7 +310,7 @@ void fill_window_with_ships(std::vector<Window*> *Windows, std::vector<int> sele
             }
             break;
         }
-        
+
     }
 }
 
